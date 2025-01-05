@@ -15,12 +15,13 @@ def movie_list():
     return render_template('movies/movies_list.html', movies=movies)
 
 
-@movie.route('/<int:post_id>')
-def movie_detail(post_id):
-    api_id = Post.query.get(post_id).api_id
-    result = search_movie_by_id(api_id)
+@movie.route('/<int:movie_id>')
+def movie_detail(movie_id):
+    result = search_movie_by_id(movie_id)
     movie = DetailMovie(result)
-    return render_template('movies/movie_detail.html', movie=movie)
+    actors_info = list(zip(movie.actor_name, movie.actor_photo))
+
+    return render_template('movies/movie_detail.html', movie=movie, actors_info=actors_info)
 
 
 @movie.route('/search', methods=['GET'])

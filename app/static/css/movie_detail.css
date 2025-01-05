@@ -1,0 +1,34 @@
+.card-body h2 {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.card-body h5 {
+    font-size: 1.2rem;
+    color: #ddd;
+}
+
+.card-text {
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.card img {
+    border-radius: 10px;
+}
+
+.card-body .row {
+    margin-top: 15px;
+}
+
+.btn-light {
+    background-color: #f8f9fa;
+    color: #343a40;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+}
+
+.btn-light:hover {
+    background-color: #e2e6ea;
+}

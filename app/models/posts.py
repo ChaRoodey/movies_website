@@ -17,6 +17,7 @@ class Post(db.Model):
 class PostMovie:
     def __init__(self, data=None):
         if data:
+            self.movie_id = data.get('id')
             self.type = data.get('type')
             self.title = data.get('name')
             self.year = data.get('year')
@@ -32,7 +33,8 @@ class DetailMovie:
             self.year = data.get('year')
             self.poster = data.get('poster').get('url')
             self.genres = [genre.get('name') for genre in data.get('genres')]
-            self.actors = [person.get('name') for person in data.get('persons')[:5]]
+            self.actor_name = [person.get('name') for person in data.get('persons')[:5]]
+            self.actor_photo = [person.get('photo') for person in data.get('persons')[:5]]
 
 
 def search_movie_by_id(movie_id):

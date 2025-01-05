@@ -1,30 +1,53 @@
-{% extends 'main/base.html' %}
-
-{% block title %}Главная{% endblock %}
+{% extends "main/base.html" %}
 
 {% block content %}
-    <div class="container mt-5">
-        <div class="card">
-            <div class="row g-0">
-                <div class="col-md-4">
-                    <img id="moviePoster" src="" alt="Постер фильма" class="img-fluid rounded-start">
-                </div>
-                <div class="col-md-8">
-                    <div class="card-body">
-                        <h2 id="movieTitle" class="card-title"></h2>
-                        <p id="movieDescription" class="card-text"></p>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item"><strong>Рейтинг:</strong> <span id="movieRating"></span></li>
-                            <li class="list-group-item"><strong>Жанры:</strong> <span id="movieGenres"></span></li>
-                            <li class="list-group-item"><strong>Страны:</strong> <span id="movieCountries"></span></li>
-                            <li class="list-group-item"><strong>Год выпуска:</strong> <span id="movieYear"></span></li>
-                            <li class="list-group-item"><strong>Длительность:</strong> <span id="movieLength"></span> мин</li>
-                            <li class="list-group-item"><strong>Возрастной рейтинг:</strong> <span id="movieAgeRating"></span></li>
-                        </ul>
-                        <button onclick="goBack()" class="btn btn-secondary mt-3">Назад</button>
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card bg-dark text-white shadow-lg">
+                <div class="row g-0">
+
+                    <div class="col-md-4 flex-column" style="flex-grow: 1;">
+                        <img src="{{ movie.poster }}" class="img-fluid rounded-start" alt="{{ movie.title }}" style="object-fit: cover; height: 100%; width: 100%;">
+                    </div>
+
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h2 class="card-title">{{ movie.title }} ({{ movie.year }})</h2>
+                            <p class="card-text">
+                                {{ movie.type or 'Тип фильма не указан.' }}
+                            </p>
+                            <p class="card-text">{{ movie.description or 'Описание фильма отсутствует.' }}</p>
+
+                            <h5>Жанры</h5>
+                            <p class="card-text">
+                                {% if movie.genres %}
+                                    {{ movie.genres|join(', ') }}
+                                {% else %}
+                                    Жанры не указаны.
+                                {% endif %}
+                            </p>
+
+                            <h5>Актеры</h5>
+                            <div class="row">
+                                {% for name, photo in actors_info %}
+                                    <div class="col-md-4 mb-3 d-flex flex-column justify-content-center align-items-center">
+                                        <img src="{{ photo }}" class="img-fluid rounded-circle" alt="{{ name }}"
+                                             style="max-width: 50px;">
+                                        <p class="mt-2">{{ name }}</p>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
+
+<div class="text-center mt-4">
+    <a href="{{ url_for('movie.movie_list') }}" class="btn btn-light">Вернуться к списку фильмов</a>
+</div>
+
 {% endblock %}

@@ -1,0 +1,29 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Главная{% endblock %}
+
+{% block content %}
+    <main class="form-signin w-100 m-auto" data-bs-theme="dark">
+        <form method="post">
+            <img class="mb-4" src="#" alt="лого" width="72" height="57">
+            <h1 class="h3 mb-3 fw-normal">Регистрация</h1>
+
+            <div class="form-floating">
+                <input type="email" class="form-control" id="floatingInput" placeholder="Имя пользователя">
+                <label for="floatingInput">Логин</label>
+            </div>
+            <div class="form-floating">
+                <input type="password2" class="form-control" id="floatingPassword" placeholder="Пароль">
+                <label for="floatingPassword">Пароль</label>
+            </div>
+
+            <div class="form-floating">
+                <input type="password" class="form-control" id="floatingPassword" placeholder="Подтверждение пароля">
+                <label for="floatingPassword">Подтверждение пароля</label>
+            </div>
+            <div class="form-check text-start my-3"></div>
+            <button class="btn btn-primary w-100 py-2" type="submit">Зарегистрироваться</button>
+            <p class="mt-5 mb-3 text-body-secondary">© 2017–2025</p>
+        </form>
+    </main>
+{% endblock %}

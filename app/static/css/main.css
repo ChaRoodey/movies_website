@@ -1,0 +1,31 @@
+/*body{*/
+/*    background: #212121;*/
+/*    color: #fff;*/
+/*}*/
+
+/*.page {*/
+/*    overflow-x: hidden;*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    min-height: 100vh;*/
+/*}*/
+
+/*.content {*/
+/*    width: 100%;*/
+/*    max-width: 98%;*/
+/*    margin: 0 auto;*/
+/*    padding: 40px 20px;*/
+/*    flex: 1 1 auto;*/
+/*}*/
+
+.header {
+    position: sticky;
+    top: 0;
+    padding: 20px;
+}
+
+.form-control input[type="email"] {
+    margin-bottom: -1px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}

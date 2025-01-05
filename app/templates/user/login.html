@@ -1,12 +1,12 @@
 {% extends 'main/base.html' %}
 
-{% block title %}Главная{% endblock %}
+{% block title %}Войти{% endblock %}
 
 {% block content %}
     <div class="min-vh-100 d-flex justify-content-center align-items-center">
         <form class="form-signin" method="post">
             {{ csrf_token }}
-            <img class="mb-4" src="#" alt="лого" width="72" height="57">
+            <img class="header_img" src="{{ url_for('static', filename='img/logo.jpg') }}" alt="Лого">
             <h1 class="h3 mb-3 fw-normal">Вход в аккаунт</h1>
 
             <div class="form-floating">
@@ -25,6 +25,7 @@
                 </label>
             </div>
             <button class="btn btn-primary w-100 py-2" type="submit">Войти</button>
+            <a class="btn btn-link mt-3" href="{{ url_for('user.register') }}">Нет аккаунта? Зарегистрироваться!</a>
             <p class="mt-5 mb-3 text-body-secondary">© 2017–2025</p>
         </form>
     </div>

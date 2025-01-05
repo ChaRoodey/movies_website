@@ -1,0 +1,30 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Главная{% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
+        <div class="card">
+            <div class="row g-0">
+                <div class="col-md-4">
+                    <img id="moviePoster" src="" alt="Постер фильма" class="img-fluid rounded-start">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h2 id="movieTitle" class="card-title"></h2>
+                        <p id="movieDescription" class="card-text"></p>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><strong>Рейтинг:</strong> <span id="movieRating"></span></li>
+                            <li class="list-group-item"><strong>Жанры:</strong> <span id="movieGenres"></span></li>
+                            <li class="list-group-item"><strong>Страны:</strong> <span id="movieCountries"></span></li>
+                            <li class="list-group-item"><strong>Год выпуска:</strong> <span id="movieYear"></span></li>
+                            <li class="list-group-item"><strong>Длительность:</strong> <span id="movieLength"></span> мин</li>
+                            <li class="list-group-item"><strong>Возрастной рейтинг:</strong> <span id="movieAgeRating"></span></li>
+                        </ul>
+                        <button onclick="goBack()" class="btn btn-secondary mt-3">Назад</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

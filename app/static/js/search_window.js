@@ -10,8 +10,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!title) {
             movieSearchResults.innerHTML = '<li class="list-group-item text-danger">Название не может быть пустым!</li>';
             return;
-        } else {
-            // alert(`Название фильма: "${title}"`)
         }
 
         movieSearchResults.innerHTML = '';
@@ -28,41 +26,59 @@ document.addEventListener('DOMContentLoaded', () => {
             if (Array.isArray(movies)) {
                 movieSearchResults.innerHTML = '';
                 movies.forEach(movie => {
-                    // Создаем новый элемент списка
                     const listItem = document.createElement('li');
                     listItem.className = 'list-group-item';
 
-                    // Создаем контейнер для данных
                     const movieInfo = document.createElement('div');
                     movieInfo.className = 'movie-info';
 
-                    // Добавляем постер
-                    // const poster = document.createElement('img');
-                    // poster.src = movie.poster?.previewUrl || 'default-image.jpg';
-                    // poster.alt = movie.name || movie.title;
-                    // poster.style.width = '50px';
-                    // poster.style.marginRight = '10px';
-                    // movieInfo.appendChild(poster);
+                    const posterContainer = document.createElement('div');
+                    posterContainer.style.position = 'relative';
+                    posterContainer.style.width = '50px';
+                    posterContainer.style.height = '75px';
 
-                    // Добавляем название
+                    const spinner = document.createElement('div');
+                    spinner.className = 'spinner-grow text-light';
+                    spinner.style.position = 'absolute';
+                    spinner.style.top = '50%';
+                    spinner.style.left = '50%';
+                    spinner.style.transform = 'translate(-50%, -50%)';
+                    spinner.style.display = 'block';
+                    spinner.style.width = '3rem';
+                    spinner.style.height = '3rem';
+                    posterContainer.appendChild(spinner);
+
+                    const poster = document.createElement('img');
+                    poster.src = movie.poster?.previewUrl || 'default-image.jpg';
+                    poster.alt = movie.name || movie.title;
+                    poster.style.width = '50px';
+                    poster.style.height = '75px';
+                    poster.style.objectFit = 'cover';
+                    poster.style.display = 'none';
+
+                    poster.onload = function () {
+                        spinner.style.display = 'none';
+                        poster.style.display = 'block';
+                    };
+
+                    posterContainer.appendChild(poster);
+                    movieInfo.appendChild(posterContainer);
+
                     const title = document.createElement('span');
                     title.textContent = movie.name || movie.title || 'Название не указано';
                     title.className = 'movie-title';
                     movieInfo.appendChild(title);
 
-                    // Добавляем год выпуска
                     const year = document.createElement('span');
                     year.textContent = ` (${movie.year || 'Год не указан'})`;
                     year.className = 'movie-year';
                     movieInfo.appendChild(year);
 
-                    // Добавляем категорию (тип фильма)
                     const genre = document.createElement('span');
                     genre.textContent = ` - ${movie.type || 'Категория не указана'}`;
                     genre.className = 'movie-genre';
                     movieInfo.appendChild(genre);
 
-                    // Вставляем информацию о фильме в элемент списка
                     listItem.appendChild(movieInfo);
                     movieSearchResults.appendChild(listItem);
                 });

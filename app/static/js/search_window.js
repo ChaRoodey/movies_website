@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const movieSearchForm = document.getElementById('movieSearchForm');
     const movieSearchInput = document.getElementById('movieSearchInput');
     const movieSearchResults = document.getElementById('movieSearchResult');
+    const modal = document.getElementById('modal');
 
     movieSearchForm.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -79,6 +80,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     genre.className = 'movie-genre';
                     movieInfo.appendChild(genre);
 
+                    const addButton = document.createElement('button');
+                    addButton.className = 'btn btn-sm btn-outline-success ml-3';
+                    addButton.textContent = 'Добавить к себе';
+                    addButton.onclick = () => addMovieToUser(movie.id);
+                    movieInfo.appendChild(addButton);
+
                     listItem.appendChild(movieInfo);
                     movieSearchResults.appendChild(listItem);
                 });
@@ -92,5 +99,24 @@ document.addEventListener('DOMContentLoaded', () => {
             movieSearchResults.innerHTML = '<li class="list-group-item text-danger">Произошла ошибка при поиске</li>';
         }
     });
+
+    async function addMovieToUser(movieId) {
+        try {
+            const response = await fetch(`/movie/add?movie_id=${movieId}`, {method: 'POST'});
+            if (!response.ok) {
+                throw new Error('Ошибка при добавлении фильма');
+            }
+
+            alert('Фильм добавлен!')
+        } catch (error) {
+            console.error(error)
+            alert('Ошибка при добавлении фильма')
+        }
+    }
+
+    modal.addEventListener('hidden.bs.modal', () => {
+        location.reload();
+    });
+
 });
 

@@ -2137,7 +2137,7 @@ progress {
 .form-control[type=file] {
   overflow: hidden;
 }
-.form-control[type=email] {
+.form-control[type=username] {
   margin-bottom: -1px;
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;

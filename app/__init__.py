@@ -16,12 +16,12 @@ def create_app(config_class=Config):
 
     db.init_app(app)
     migrate.init_app(app, db)
-    # login_manager.init_app(app)
-    #
-    # # LOGIN MANAGER
-    # login_manager.login_view = 'user.login'
-    # login_manager.login_message = 'Please log in to access this page.'
-    # login_manager.login_message_category = 'info'
+    login_manager.init_app(app)
+
+    # LOGIN MANAGER
+    login_manager.login_view = 'user.login'
+    login_manager.login_message = 'Для доступа к этой странице требуется авторизация.'
+    login_manager.login_message_category = 'info'
 
     with app.app_context():
         db.create_all()

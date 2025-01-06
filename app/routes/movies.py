@@ -1,13 +1,21 @@
-from flask import Blueprint, render_template, request, jsonify
+from flask import Blueprint, render_template, request, jsonify, redirect, url_for
+from flask_login import current_user
 from ..models.posts import Post, search_movie, DetailMovie, Genre, Actor
 from ..extensions import db
+
 
 movie = Blueprint('movie', __name__, url_prefix='/movie')
 
 
+@movie.before_request
+def require_login():
+    if not current_user.is_authenticated:
+        return redirect(url_for('user.login'))
+
+
 @movie.route('/', methods=['GET'])
 def movie_list():
-    movies_query = Post.query.order_by(Post.post_creation_date.desc()).all()
+    movies_query = Post.query.filter_by(post_author=current_user.id).order_by(Post.post_creation_date.desc()).all()
     return render_template('movies/movies_list.html', movies=movies_query)
 
 
@@ -23,6 +31,7 @@ def add_movie():
 
     try:
         title = result.get('name')
+        post_author = current_user.id
         description = result.get('description')
         year = result.get('year')
         movie_type = result.get('type')
@@ -30,7 +39,6 @@ def add_movie():
 
         genre = result.get('genres', [])
         genre_names = [genre.get('name') for genre in genre]
-        print(genre_names)
 
         persons = result.get('persons', [])
         top_actors = persons[:5]
@@ -38,7 +46,7 @@ def add_movie():
 
         new_movie = Post(
             movie_api_id=movie_api_id,
-            post_author=1,
+            post_author=post_author,
             title=title,
             description=description,
             year=year,
@@ -52,7 +60,6 @@ def add_movie():
         db.session.flush()
 
         for genre_name in genre_names:
-            print(genre_name)
             existing_genre = Genre.query.filter_by(name=genre_name).first()
             if not existing_genre:
                 existing_genre = Genre(name=genre_name)
@@ -100,4 +107,10 @@ def movie_search():
     if not movies:
         return jsonify({'error': 'No movies found'})
 
-    return jsonify(movies)
+    movie_results = []
+    for movie in movies:
+        is_added = Post.query.filter_by(movie_api_id=movie.get('id'), post_author=current_user.id).first()
+        movie['is_added'] = True if is_added else False
+        movie_results.append(movie)
+
+    return jsonify(movie_results), 200

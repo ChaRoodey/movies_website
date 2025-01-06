@@ -5,14 +5,17 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/bs/bootstrap.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/movie_list.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     {% block style %}{% endblock %}
     <title>{% block title %}{% endblock %}</title>
 </head>
 
 <body data-bs-theme="dark">
     <div class="page">
-        <header class="header">{% include 'main/_header.html' %}</header>
-        {% include 'main/_search_window.html' %}
+        {% if not request.endpoint in ('user.login', 'user.register') %}
+        	<header class="header">{% include 'main/_header.html' %}</header>
+            {% include 'main/_search_window.html' %}
+        {% endif %}
         <main class="content">{% block content %}{% endblock %}</main>
         <footer class="footer">{% include 'main/_footer.html' %}</footer>
     </div>

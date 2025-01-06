@@ -3,29 +3,44 @@
 {% block title %}Темы{% endblock %}
 
 {% block content %}
-    <div class="album py-5 bg-body-tertiary">
-        <div class="container">
-            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                {% for movie in movies %}
-                    <div class="col">
-                        <div class="card shadow-sm">
-                            <a href="{{ url_for('movie.movie_detail', api_id=movie.movie_api_id) }}" class="img-hover">
-                                <img id="post_img" src="{{ movie.poster }}" alt="Лого" class="img-fluid">
-                            </a>
-                            <div class="card-body">
-                                <p class="card-header">{{ movie.title }} {{ movie.year }}</p>
-                                <p class="card-text">Статус: {{ movie.status }}</p>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="btn-group">
-                                        <a href="{{ url_for('movie.movie_detail', api_id=movie.movie_api_id) }}" class="btn btn-sm btn-outline-secondary">Подробнее</a>
+    {% if movies %}
+        <div class="album py-5 bg-body-tertiary">
+            <div class="container">
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                    {% for movie in movies %}
+                        <div class="col">
+                            <div class="card shadow-sm">
+                                <a href="{{ url_for('movie.movie_detail', api_id=movie.movie_api_id) }}"
+                                   class="img-hover">
+                                    <img id="post_img" src="{{ movie.poster }}" alt="Лого" class="img-fluid">
+                                </a>
+                                <div class="card-body">
+                                    <p class="card-header">{{ movie.title }} {{ movie.year }}</p>
+                                    <p class="card-text">Статус: {{ movie.status }}</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <a href="{{ url_for('movie.movie_detail', api_id=movie.movie_api_id) }}"
+                                               class="btn btn-sm btn-outline-secondary">Подробнее</a>
+                                        </div>
+                                        <small class="text-body-secondary">{{ movie.type }}</small>
                                     </div>
-                                    <small class="text-body-secondary">{{ movie.type }}</small>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                {% endfor %}
+                    {% endfor %}
+                </div>
             </div>
         </div>
-    </div>
+    {% else %}
+        <div class="custom-vh-75 d-flex justify-content-center align-items-center">
+            <div class="text-center text-light p-4 rounded shadow">
+                <h4>Сейчас в вашем списке ничего нет.</h4>
+                <p class="mb-0 mb-3">Добавим что-нибудь?</p>
+                <button type="button" class="btn btn-outline-light m-2" data-bs-toggle="modal" data-bs-target="#modal">
+                    Поиск
+                    фильмов...
+                </button>
+            </div>
+        </div>
+    {% endif %}
 {% endblock %}

@@ -1,3 +1,4 @@
+import logging
 import requests
 from datetime import datetime, timezone
 from ..extensions import db
@@ -8,6 +9,7 @@ HEADERS = {
     "accept": "application/json",
     'X-API-Key': KINOPOISK_API_KEY
 }
+logger = logging.getLogger(__name__)
 
 
 post_actors = db.Table(
@@ -67,20 +69,38 @@ class DetailMovie:
 
 
 def search_movie(movie_id=None, movie_title=None):
+    logger.info(f'Searching movie function')
+    logger.debug(f'{movie_id=}, {movie_title=}')
     if movie_id:
         url = f'https://api.kinopoisk.dev/v1.4/movie/{movie_id}'
     elif movie_title:
         url = f'https://api.kinopoisk.dev/v1.4/movie/search?page=1&limit=10&query={movie_title}'
     else:
         return None
+    logger.debug(f'{url=}')
 
     response = requests.get(url, headers=HEADERS)
 
     if response.status_code == 200 and movie_id:
+        logger.info(f'Request successful')
         return response.json()
     elif response.status_code == 200 and movie_title:
+        logger.info(f'Request successful')
         return response.json()['docs']
+    logger.info(f'Request unsuccessful')
     return None
+
+
+def status_id_to_str(status_id: str) -> str:
+    logger.debug(f'status_id_to_str function {status_id=}')
+    if status_id == '1':
+        return 'Посмотреть позже'
+    elif status_id == '2':
+        return 'Не досмотрел'
+    elif status_id == '3':
+        return 'На один раз'
+    elif status_id == '4':
+        return 'Восторг'
 
 
 # def search_movie(title):

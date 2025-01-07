@@ -1,0 +1,31 @@
+<div class="dropdown">
+    <button
+            class="btn dropdown-toggle {% if movie.status == 1 %}btn-secondary{% elif movie.status == 2 %}btn-danger{% elif movie.status == 3 %}btn-warning{% elif movie.status == 4 %}btn-success{% endif %}"
+            type="button"
+            id="dropdownMenuButton-{{ movie.id }}"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+            style="font-size: 0.8rem; padding: 10px 20px;">
+        {% if movie.status == 1 %}
+            Посмотреть позже
+        {% elif movie.status == 2 %}
+            Не досмотрел
+        {% elif movie.status == 3 %}
+            На один раз
+        {% elif movie.status == 4 %}
+            Восторг
+        {% endif %}
+    </button>
+    <ul class="dropdown-menu"
+        aria-labelledby="dropdownMenuButton-{{ movie.id }}">
+        <li><a class="dropdown-item" href="#"
+               onclick="changeStatus({{ movie.id }}, 1)">Посмотреть позже</a></li>
+        <li><a class="dropdown-item" href="#"
+               onclick="changeStatus({{ movie.id }}, 2)">Не досмотрел</a></li>
+        <li><a class="dropdown-item" href="#"
+               onclick="changeStatus({{ movie.id }}, 3)">На один раз</a>
+        </li>
+        <li><a class="dropdown-item" href="#"
+               onclick="changeStatus({{ movie.id }}, 4)">Восторг</a></li>
+    </ul>
+</div>

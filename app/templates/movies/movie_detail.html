@@ -1,12 +1,17 @@
 {% extends "main/base.html" %}
 
+{% block title %}{{ movie.title }}{% endblock %}
+
 {% block content %}
+<div class="mt-4">
+            <a href="{{ url_for('movie.movie_list') }}" class="btn btn-dark"><--К списку фильмов</a>
+        </div>
     <div class="container py-5">
+
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card bg-dark text-white shadow-lg">
                     <div class="row g-0">
-
                         <div class="col-md-4 flex-column" style="flex-grow: 1;">
                             <img src="{{ movie.poster }}" class="img-fluid rounded-start" alt="{{ movie.title }}"
                                  style="object-fit: cover; height: 100%; width: 100%;">
@@ -15,84 +20,10 @@
                         <div class="col-md-8">
                             <div class="card-body"><h2 class="card-title">{{ movie.title }} ({{ movie.year }})</h2>
                                 <div class="d-flex justify-content-between align-items-center mt-4">
-                                    <p class="card-text">
-                                        {{ movie.type or 'Тип фильма не указан.' }}
-                                    </p>
-
-                                    {% set rating = movie.rating %}
-                                    {% set red = (10 - rating) * 25.5 %}
-                                    {% set green = (rating - 1) * 25.5 %}
-                                    {% set gradient_color = 'rgb(' ~ red | round ~ ',' ~ green | round ~ ', 0)' %}
-
-                                    <div class="rating-block"
-                                         style="background: {{ gradient_color }}; padding: 10px; border-radius: 5px;">
-                                        <p class="card-text mb-0" style="color: white; font-size: 1.2em;">
-                                            Imdb: {{ rating }}</p>
-                                    </div>
-
-                                    {#<p class="card-text mb-0">Imdb: {{ movie.rating }}</p>#}
-
-                                    {% if movie.status %}
-                                        <div class="dropdown">
-                                            <button
-                                                    class="btn dropdown-toggle {% if movie.status == 1 %}btn-secondary{% elif movie.status == 2 %}btn-danger{% elif movie.status == 3 %}btn-warning{% elif movie.status == 4 %}btn-success{% endif %}"
-                                                    type="button"
-                                                    id="dropdownMenuButton-{{ movie.id }}"
-                                                    data-bs-toggle="dropdown"
-                                                    aria-expanded="false"
-                                                    style="font-size: 1rem; padding: 10px 20px;">
-                                                {% if movie.status == 1 %}
-                                                    TODO
-                                                {% elif movie.status == 2 %}
-                                                    Плохой
-                                                {% elif movie.status == 3 %}
-                                                    На один раз
-                                                {% elif movie.status == 4 %}
-                                                    Понравился
-                                                {% endif %}
-                                            </button>
-                                            <ul class="dropdown-menu"
-                                                aria-labelledby="dropdownMenuButton-{{ movie.id }}">
-                                                <li><a class="dropdown-item" href="#"
-                                                       onclick="changeStatus({{ movie.id }}, 1)">TODO</a></li>
-                                                <li><a class="dropdown-item" href="#"
-                                                       onclick="changeStatus({{ movie.id }}, 2)">Плохой</a></li>
-                                                <li><a class="dropdown-item" href="#"
-                                                       onclick="changeStatus({{ movie.id }}, 3)">На один раз</a></li>
-                                                <li><a class="dropdown-item" href="#"
-                                                       onclick="changeStatus({{ movie.id }}, 4)">Понравился</a></li>
-                                            </ul>
-                                        </div>
-                                    {% endif %}
+                                    {% include 'movies/_type_block.html' %}
+                                    {% include 'movies/_rating_block.html' %}
+                                    {% include 'movies/_status_block.html' %}
                                 </div>
-                                {#                            <div class="d-flex justify-content-between align-items-center mt-4">#}
-                                {#                                <h2 class="card-title">{{ movie.title }} ({{ movie.year }})</h2>#}
-                                {#                                <p class="card-text mb-0">Rating: {{ movie.rating }}</p>#}
-                                {#                                {% if movie.status %}#}
-                                {#                                    <div class="badge#}
-                                {#                                {% if movie.status == 1 %}#}
-                                {#                                    text-bg-secondary#}
-                                {#                                {% elif movie.status == 2 %}#}
-                                {#                                    text-bg-danger#}
-                                {#                                {% elif movie.status == 3 %}#}
-                                {#                                    text-bg-warning#}
-                                {#                                {% elif movie.status == 4 %}#}
-                                {#                                    text-bg-success#}
-                                {#                                {% endif %}#}
-                                {#                            ">#}
-                                {#                                        {% if movie.status == 1 %}#}
-                                {#                                            TODO#}
-                                {#                                        {% elif movie.status == 2 %}#}
-                                {#                                            Плохой#}
-                                {#                                        {% elif movie.status == 3 %}#}
-                                {#                                            На один раз#}
-                                {#                                        {% elif movie.status == 4 %}#}
-                                {#                                            Понравился#}
-                                {#                                        {% endif %}#}
-                                {#                                    </div>#}
-                                {#                                {% endif %}#}
-                                {#                            </div>#}
-
                                 <p class="card-text mt-3">{{ movie.description or 'Описание фильма отсутствует.' }}</p>
 
                                 <h5>Жанры</h5>
@@ -120,10 +51,6 @@
                 </div>
             </div>
         </div>
-    </div>
-
-    <div class="text-center mt-4">
-        <a href="{{ url_for('movie.movie_list') }}" class="btn btn-light">Вернуться к списку фильмов</a>
     </div>
 
 {% endblock %}

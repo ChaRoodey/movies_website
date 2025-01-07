@@ -5,18 +5,31 @@
     </a>
 
     <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-        <li><a href="{{ url_for('index.home_page') }}" class="nav-link px-2 text-secondary">Главная стрница</a></li>
+{#        <li><a href="{{ url_for('index.home_page') }}" class="nav-link px-2 text-secondary">Главная стрница</a></li>#}
         {% if current_user.is_authenticated %}
-            <li><a href="{{ url_for('movie.movie_list') }}" class="nav-link px-2 text-white">Список фильмов</a></li>
+            <li><a href="{{ url_for('movie.movie_list') }}" class="nav-link px-2 text-white m-lg-2">Фильмы</a></li>
         {% endif %}
     </ul>
 
-    <div class="text-end">
+    <div class="text-end d-flex align-items-center">
         {% if current_user.is_authenticated %}
             <button type="button" class="btn btn-outline-light m-2" data-bs-toggle="modal" data-bs-target="#modal">Поиск
                 фильмов...
             </button>
-            <a href="{{ url_for('user.logout') }}" type="button" class="btn btn-outline-light me-2">Выйти</a>
+            <div class="dropdown">
+                <button class="btn btn-outline-light dropdown-toggle" type="button" id="dropdownMenuButton"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                    Меню
+{#                    <img src="{{ current_user.avatar }}" alt="Аватар" class="rounded-circle"#}
+{#                         style="width: 40px; height: 40px;">#}
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
+                    <li><a class="dropdown-item" href="{{ url_for('user.profile') }}">Профиль</a></li>
+                    <li><a class="dropdown-item" href="{{ url_for('user.logout') }}">Выйти</a></li>
+                </ul>
+            </div>
+
+            {#            <a href="{{ url_for('user.logout') }}" type="button" class="btn btn-outline-light me-2">Выйти</a>#}
         {% else %}
             <a href="{{ url_for('user.login') }}" type="button" class="btn btn-outline-light me-2">Войти</a>
             <a href="{{ url_for('user.register') }}" type="button" class="btn btn-outline-light">Регистрация</a>

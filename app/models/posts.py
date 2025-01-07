@@ -57,6 +57,8 @@ class DetailMovie:
             self.type = post.type
             self.title = post.title
             self.description = post.description
+            self.status = post.status
+            self.rating = post.rating
             self.year = post.year
             self.poster = post.poster
             self.genres = genres

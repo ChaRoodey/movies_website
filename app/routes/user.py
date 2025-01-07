@@ -1,11 +1,11 @@
 from flask import Blueprint, redirect, render_template, request, url_for
 from flask_login import login_user, logout_user, login_required
-
 from ..models.users import User
 from ..extensions import bcrypt, db
 from ..forms import RegistrationForm, LoginForm
 
 user = Blueprint('user', __name__, url_prefix='/user')
+
 
 @user.route('/register', methods=['GET', 'POST'])
 def register():
@@ -42,7 +42,7 @@ def login():
 @login_required
 @user.route('/profile')
 def profile():
-    return 'Профиль'
+    return render_template('/user/profile.html')
 
 
 @user.route('/logout')

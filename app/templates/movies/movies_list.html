@@ -1,3 +1,50 @@
+{#{% extends 'main/base.html' %}#}
+{##}
+{#{% block title %}Темы{% endblock %}#}
+{##}
+{#{% block content %}#}
+{#    {% if movies %}#}
+{#        <div class="album py-5 bg-body-tertiary">#}
+{#            <div class="container">#}
+{#                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">#}
+{#                    {% for movie in movies %}#}
+{#                        <div class="col">#}
+{#                            <div class="card shadow-sm">#}
+{#                                <a href="{{ url_for('movie.movie_detail', api_id=movie.movie_api_id) }}"#}
+{#                                   class="img-hover">#}
+{#                                    <img id="post_img" src="{{ movie.poster }}" alt="Лого" class="img-fluid">#}
+{#                                </a>#}
+{#                                <div class="card-body">#}
+{#                                    <p class="card-header">{{ movie.title }} {{ movie.year }}</p>#}
+{#                                    <p class="card-text">Статус: {{ movie.status }}</p>#}
+{#                                    <div class="d-flex justify-content-between align-items-center">#}
+{#                                        <div class="btn-group">#}
+{#                                            <a href="{{ url_for('movie.movie_detail', api_id=movie.movie_api_id) }}"#}
+{#                                               class="btn btn-sm btn-outline-secondary">Подробнее</a>#}
+{#                                        </div>#}
+{#                                        <small class="text-body-secondary">{{ movie.type }}</small>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    {% endfor %}#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    {% else %}#}
+{#        <div class="custom-vh-75 d-flex justify-content-center align-items-center">#}
+{#            <div class="text-center text-light p-4 rounded shadow">#}
+{#                <h4>Сейчас в вашем списке ничего нет.</h4>#}
+{#                <p class="mb-0 mb-3">Добавим что-нибудь?</p>#}
+{#                <button type="button" class="btn btn-outline-light m-2" data-bs-toggle="modal" data-bs-target="#modal">#}
+{#                    Поиск#}
+{#                    фильмов...#}
+{#                </button>#}
+{#            </div>#}
+{#        </div>#}
+{#    {% endif %}#}
+{#{% endblock %}#}
+
 {% extends 'main/base.html' %}
 
 {% block title %}Темы{% endblock %}
@@ -16,8 +63,54 @@
                                 </a>
                                 <div class="card-body">
                                     <p class="card-header">{{ movie.title }} {{ movie.year }}</p>
-                                    <p class="card-text">Статус: {{ movie.status }}</p>
-                                    <div class="d-flex justify-content-between align-items-center">
+
+                                    <div class="d-flex justify-content-between align-items-center mt-4">
+                                                                        {% set rating = movie.rating %}
+                                    {% set red = (10 - rating) * 25.5 %}
+                                    {% set green = (rating - 1) * 25.5 %}
+                                    {% set gradient_color = 'rgb(' ~ red | round ~ ',' ~ green | round ~ ', 0)' %}
+
+                                    <div class="rating-block"
+                                         style="background: {{ gradient_color }}; padding: 10px; border-radius: 5px;">
+                                        <p class="card-text mb-0" style="color: white; font-size: 0.8em;">
+                                            Imdb: {{ rating }}</p>
+                                    </div>
+
+                                        {% if movie.status %}
+                                        <div class="dropdown">
+                                            <button
+                                                    class="btn dropdown-toggle {% if movie.status == 1 %}btn-secondary{% elif movie.status == 2 %}btn-danger{% elif movie.status == 3 %}btn-warning{% elif movie.status == 4 %}btn-success{% endif %}"
+                                                    type="button"
+                                                    id="dropdownMenuButton-{{ movie.id }}"
+                                                    data-bs-toggle="dropdown"
+                                                    aria-expanded="false"
+                                                    style="font-size: 0.8rem; padding: 10px 20px;">
+                                                {% if movie.status == 1 %}
+                                                    TODO
+                                                {% elif movie.status == 2 %}
+                                                    Плохой
+                                                {% elif movie.status == 3 %}
+                                                    На один раз
+                                                {% elif movie.status == 4 %}
+                                                    Понравился
+                                                {% endif %}
+                                            </button>
+                                            <ul class="dropdown-menu"
+                                                aria-labelledby="dropdownMenuButton-{{ movie.id }}">
+                                                <li><a class="dropdown-item" href="#"
+                                                       onclick="changeStatus({{ movie.id }}, 1)">TODO</a></li>
+                                                <li><a class="dropdown-item" href="#"
+                                                       onclick="changeStatus({{ movie.id }}, 2)">Плохой</a></li>
+                                                <li><a class="dropdown-item" href="#"
+                                                       onclick="changeStatus({{ movie.id }}, 3)">На один раз</a></li>
+                                                <li><a class="dropdown-item" href="#"
+                                                       onclick="changeStatus({{ movie.id }}, 4)">Понравился</a></li>
+                                            </ul>
+                                        </div>
+                                    {% endif %}
+                                    </div>
+
+                                    <div class="d-flex justify-content-between align-items-center mt-3">
                                         <div class="btn-group">
                                             <a href="{{ url_for('movie.movie_detail', api_id=movie.movie_api_id) }}"
                                                class="btn btn-sm btn-outline-secondary">Подробнее</a>

@@ -19,7 +19,9 @@
         <main class="content">{% block content %}{% endblock %}</main>
         <footer class="footer">{% include 'main/_footer.html' %}</footer>
     </div>
-    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+{#    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>#}
+    <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/search_window.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/change_status.js') }}"></script>
 </body>
 </html>

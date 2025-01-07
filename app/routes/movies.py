@@ -36,6 +36,7 @@ def add_movie():
         year = result.get('year')
         movie_type = result.get('type')
         poster = result.get('poster', {}).get('url', 'static/img/logo.jpg')
+        rating = result.get('rating').get('imdb')
 
         genre = result.get('genres', [])
         genre_names = [genre.get('name') for genre in genre]
@@ -53,7 +54,7 @@ def add_movie():
             type=movie_type,
             poster=poster,
             status=1,
-            rating=1
+            rating=rating
         )
 
         db.session.add(new_movie)
@@ -114,3 +115,22 @@ def movie_search():
         movie_results.append(movie)
 
     return jsonify(movie_results), 200
+
+
+@movie.route('/change_status', methods=['POST'])
+def change_status():
+    data = request.get_json()
+    movie_id = data.get('movie_id')
+    status = data.get('status')
+
+    movie = Post.query.filter_by(id=movie_id, post_author=current_user.id).first()
+    if not movie:
+        return jsonify({'success': False, 'message': 'Фильм не найден'}), 404
+
+    try:
+        movie.status = status
+        db.session.commit()
+        return jsonify({'success': True}), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'success': False, 'message': str(e)}), 500

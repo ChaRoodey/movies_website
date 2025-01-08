@@ -1,0 +1,35 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Войти{% endblock %}
+
+{% block content %}
+    <div class="min-vh-100 d-flex justify-content-center align-items-center">
+        <form class="form-signin" method="post">
+            {{ form.csrf_token }}
+            <div class="d-flex flex-column justify-content-center align-items-center">
+                <a href="{{ url_for('index.home_page') }}">
+                    <img class="header_img" src="{{ url_for('static', filename='img/logo.jpg') }}" alt="Лого">
+                </a>
+                <h1 class="h3 mb-3 fw-normal">Вход в аккаунт</h1>
+            </div>
+
+            <div class="form-floating">
+                {{ form.username(type="username", class="form-control", id="floatingUsername", placeholder="Имя пользователя") }}
+                <label for="floatingInput">Логин</label>
+            </div>
+            <div class="form-floating">
+                {{ form.password(type="password", class="form-control", id="floatingPassword", placeholder="Пароль") }}
+                <label for="floatingPassword">Пароль</label>
+            </div>
+
+            <div class="form-check text-start my-3">
+                {{ form.remember.label(class="form-check-label", for="flexCheckDefault") }}
+                {{ form.remember(class="form-check-input", type="checkbox", value="remember-me", id="flexCheckDefault") }}
+            </div>
+
+            <button class="btn btn-primary w-100 py-2" type="submit">Войти</button>
+            <a class="btn btn-link mt-3" href="{{ url_for('user.register') }}">Нет аккаунта? Зарегистрироваться!</a>
+            <p class="mt-5 mb-3 text-body-secondary">© 2017–2025</p>
+        </form>
+    </div>
+{% endblock %}

@@ -1,0 +1,20 @@
+<div id="modal" class="modal fade" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalLabel">Поиск фильмов</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+            </div>
+            <div class="modal-body">
+                <form id="movieSearchForm">
+                    <div class="mb-3">
+                        <label for="movieSearchInput" class="form-label">Введите название фильма</label>
+                        <input type="text" id="movieSearchInput" class="form-control" placeholder="Например: Интерстеллар">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Искать</button>
+                </form>
+                <ul id="movieSearchResult" class="list-group m-3"></ul>
+            </div>
+        </div>
+    </div>
+</div>

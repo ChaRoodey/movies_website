@@ -1,0 +1,10 @@
+{% set rating = movie.rating %}
+{% set red = (10 - rating) * 25.5 %}
+{% set green = (rating - 1) * 25.5 %}
+{% set gradient_color = 'rgb(' ~ red | round ~ ',' ~ green | round ~ ', 0)' %}
+
+<div class="rating-block"
+     style="background: {{ gradient_color }}; padding: 10px; border-radius: 5px;">
+    <p class="card-text mb-0" style="color: white; font-size: 0.8em;">
+        Imdb: {{ rating }}</p>
+</div>

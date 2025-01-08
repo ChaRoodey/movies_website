@@ -1,0 +1,56 @@
+{% extends "main/base.html" %}
+
+{% block title %}{{ movie.title }}{% endblock %}
+
+{% block content %}
+<div class="mt-4">
+            <a href="{{ url_for('movie.movie_list') }}" class="btn btn-dark"><--К списку фильмов</a>
+        </div>
+    <div class="container py-5">
+
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card bg-dark text-white shadow-lg">
+                    <div class="row g-0">
+                        <div class="col-md-4 flex-column" style="flex-grow: 1;">
+                            <img src="{{ movie.poster }}" class="img-fluid rounded-start" alt="{{ movie.title }}"
+                                 style="object-fit: cover; height: 100%; width: 100%;">
+                        </div>
+
+                        <div class="col-md-8">
+                            <div class="card-body"><h2 class="card-title">{{ movie.title }} ({{ movie.year }})</h2>
+                                <div class="d-flex justify-content-between align-items-center mt-4">
+                                    {% include 'movies/_type_block.html' %}
+                                    {% include 'movies/_rating_block.html' %}
+                                    {% include 'movies/_status_block.html' %}
+                                </div>
+                                <p class="card-text mt-3">{{ movie.description or 'Описание фильма отсутствует.' }}</p>
+
+                                <h5>Жанры</h5>
+                                <p class="card-text">
+                                    {% if movie.genres %}
+                                        {{ movie.genres|join(', ') }}
+                                    {% else %}
+                                        Жанры не указаны.
+                                    {% endif %}
+                                </p>
+
+                                <h5>Актеры</h5>
+                                <div class="row">
+                                    {% for name, photo in actors_info %}
+                                        <div class="col-md-4 mb-3 d-flex flex-column justify-content-center align-items-center">
+                                            <img src="{{ photo }}" class="img-fluid rounded-circle" alt="{{ name }}"
+                                                 style="max-width: 50px;">
+                                            <p class="mt-2">{{ name }}</p>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

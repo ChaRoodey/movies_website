@@ -1,0 +1,22 @@
+{% extends "main/base.html" %}
+
+{% block title %}Ваши фильмы{% endblock %}
+
+{% block content %}
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card text-white shadow-lg">
+                    <div class="card-body">
+                        <h2>Привет, {{ current_user.username }}!</h2>
+                        <p>Давайте оценим фильмы!</p>
+
+                        <div class="d-flex justify-content-between">
+                            <a href="{{ url_for('movie.movie_list') }}" class="btn btn-success">Перейти в список фильмов</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

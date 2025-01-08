@@ -3,7 +3,7 @@ import logging
 from flask import Blueprint, render_template
 from flask_login import current_user
 
-index = Blueprint('index', __name__, url_prefix='/index')
+index = Blueprint('index', __name__)
 logger = logging.getLogger(__name__)
 
 @index.route('/')
